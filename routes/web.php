@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ApiDataController;
 use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,5 +24,7 @@ Route::delete('/items/{item}', [ItemController::class, 'destroy'])->name('items.
 Route::get('/api/category-stats', [ItemController::class, 'genderStats'])->name('items.genderStats');
 Route::get('/api/date-stats', [ItemController::class, 'aggregateStats'])->name('items.aggregateStats');
 Route::get('/api/genderaggreg-stats', [ItemController::class, 'genderAggregStats'])->name('items.genderAggregStats');
+
+Route::post('/fetch-api-data', [ApiDataController::class, 'fetchApiData']);
 
 require __DIR__ . '/auth.php';

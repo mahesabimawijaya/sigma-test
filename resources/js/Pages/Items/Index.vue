@@ -36,6 +36,19 @@ const fetchData = () => {
     router.get("/items", state.filters, { preserveState: true });
 };
 
+const fetchJsonData = () => {
+    router.post(
+        "/fetch-api-data",
+        {},
+        {
+            onSuccess: () => {
+                router.get("/items", {}, { preserveState: true }); // Refresh items after fetching
+            },
+            onError: (error) => console.error("Error:", error),
+        }
+    );
+};
+
 const openModal = (item = null) => {
     if (item) {
         state.isEditing = true;
@@ -69,11 +82,11 @@ const destroy = (id) => {
 </script>
 
 <template>
-    <Head title="Items" />
+    <Head title="User" />
     <AuthenticatedLayout>
         <div class="p-10 max-w-screen-xl mx-auto relative">
             <div class="w-full bg-white p-5 rounded-md">
-                <h1 class="text-2xl font-semibold mb-5">Users Management</h1>
+                <h1 class="text-2xl font-semibold mb-5">User Management</h1>
                 <div class="flex justify-between mb-5">
                     <div class="flex items-center gap-3">
                         <input
@@ -100,12 +113,20 @@ const destroy = (id) => {
                             </option>
                         </select>
                     </div>
-                    <button
-                        @click="openModal()"
-                        class="bg-blue-600 text-white px-5 rounded-md"
-                    >
-                        Add New Item
-                    </button>
+                    <div class="flex items-center gap-3">
+                        <button
+                            @click="fetchJsonData"
+                            class="px-4 py-2 bg-violet-500 text-white rounded"
+                        >
+                            Fetch JSON Data
+                        </button>
+                        <button
+                            @click="openModal()"
+                            class="px-4 py-2 bg-blue-600 text-white rounded-md"
+                        >
+                            Add New Item
+                        </button>
+                    </div>
                 </div>
 
                 <table class="w-full table table-auto">
